@@ -1,0 +1,42 @@
+:root {
+  font-family: 'Trebuchet MS', 'Aptos', 'Segoe UI', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #161616;
+  background: #2d3d24;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+}
+
+body,
+input,
+button,
+a {
+  font: inherit;
+}
+
+button,
+input {
+  border: 0;
+}
+
+#root {
+  min-height: 100svh;
+}
