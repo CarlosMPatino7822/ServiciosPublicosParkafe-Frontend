@@ -50,8 +50,6 @@ function App() {
                 <input type="checkbox" name="remember" />
                 <span>Recordarme</span>
               </label>
-
-              <a href="#recuperacion">Olvido su contrasena?</a>
             </div>
 
             <button className="login-button" type="submit">

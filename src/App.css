@@ -150,7 +150,7 @@
 
 .login-options {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   gap: 1rem;
   color: #8a8a8a;
@@ -165,15 +165,6 @@
 
 .remember-option input {
   accent-color: #90c039;
-}
-
-.login-options a {
-  color: #5b6f8f;
-  text-decoration: none;
-}
-
-.login-options a:hover {
-  text-decoration: underline;
 }
 
 .login-button {
