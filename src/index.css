@@ -1,5 +1,7 @@
+@import '@fontsource-variable/source-sans-3';
+
 :root {
-  font-family: 'Trebuchet MS', 'Aptos', 'Segoe UI', sans-serif;
+  font-family: 'Source Sans 3 Variable', 'Aptos', 'Segoe UI', sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color: #161616;
@@ -35,6 +37,14 @@ a {
 button,
 input {
   border: 0;
+}
+
+button {
+  font: inherit;
+}
+
+img {
+  max-width: 100%;
 }
 
 #root {

@@ -1,16 +1,117 @@
-# React + Vite
+# Servicios Publicos Parque del Cafe - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend web para gestionar las lecturas de servicios publicos del Parque del Cafe.
 
-Currently, two official plugins are available:
+La aplicacion esta pensada para reemplazar el manejo manual en Excel por una pantalla web donde los electricos registran lecturas y los administradores consultan, administran usuarios, gestionan concesionarios y preparan la informacion para exportaciones futuras.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Que permite hacer hoy
 
-## React Compiler
+- Iniciar sesion con usuario y contrasena usando el backend Spring Boot.
+- Enviar al usuario a su panel segun el rol que devuelve el backend.
+- Ver panel de administrador general.
+- Ver y crear usuarios desde el panel administrativo.
+- Ver y crear servicios publicos: energia, agua, gas u otros.
+- Ver y crear concesionarios.
+- Asociar concesionarios con servicios y numero de contador.
+- Ver panel de administrador electrico para manejo de usuarios electricos.
+- Ver panel de electrico con formato tipo planilla mensual para registrar lecturas.
+- Probar en PC y tablet gracias al diseno responsive.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Roles del sistema
 
-## Expanding the ESLint configuration
+| Rol en backend | Vista del frontend | Que hace |
+| --- | --- | --- |
+| `SISTEMAS` | Administrador general | Maneja usuarios, catalogos, formatos, registros y futuras exportaciones. |
+| `ADMINELECTRICOS` | Administrador electrico | Maneja usuarios electricos: crear, activar e inactivar. |
+| `ELECTRICO` | Electrico | Registra lecturas mensuales de energia, agua y gas. |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Como prender el proyecto completo
+
+Primero debe estar prendido el backend y despues el frontend.
+
+### 1. Prender MySQL
+
+Abre XAMPP y prende `MySQL`.
+
+La base de datos debe llamarse:
+
+```sql
+servicios_publicos_parkcafe
+```
+
+### 2. Prender backend
+
+En una terminal:
+
+```powershell
+cd "C:\Users\shado\Documents\GitHub\_tmp_servicios_backend_review\ServiciosPublicosParkcafe"
+.\gradlew.bat bootRun
+```
+
+Debe abrir:
+
+```txt
+http://localhost:8080/swagger-ui.html
+```
+
+### 3. Prender frontend
+
+En otra terminal:
+
+```powershell
+cd "C:\Users\shado\Documents\GitHub\ServiciosPublicosParkfe-FRONTEND"
+npm run dev
+```
+
+Normalmente abre en:
+
+```txt
+http://localhost:5173
+```
+
+## Usuario inicial de pruebas
+
+Se creo un usuario inicial directamente en MySQL para poder entrar mientras el backend queda con datos semilla formales:
+
+```txt
+Usuario: admin
+Contrasena: admin123
+Rol: SISTEMAS
+```
+
+## Conexion frontend-backend
+
+En desarrollo el frontend usa un proxy de Vite.
+
+El frontend llama a:
+
+```txt
+/parcafe
+```
+
+Y Vite redirige internamente hacia:
+
+```txt
+http://localhost:8080/parcafe
+```
+
+Esto evita errores de CORS mientras desarrollamos localmente.
+
+## Documentacion detallada
+
+- [Guia del frontend](./docs/frontend-guide.md)
+- [Conexion con backend](./docs/backend-integration.md)
+- [Guia para probar](./docs/testing-guide.md)
+- [Pendientes y decisiones](./docs/roadmap.md)
+
+## Comandos utiles
+
+```powershell
+npm run dev
+npm run lint
+npm run build
+```
+
+`npm run lint` revisa errores de codigo.
+
+`npm run build` confirma que el proyecto puede compilar para produccion.

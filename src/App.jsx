@@ -1,65 +1,56 @@
+import { useState } from 'react'
 import './App.css'
-import brandLogo from './assets/logo-parque-del-cafe.png'
+import { RoleLogin } from './components/RoleLogin.jsx'
+import { ElectricalAdminPanel } from './pages/ElectricalAdminPanel.jsx'
+import { ElectricianPanel } from './pages/ElectricianPanel.jsx'
+import { SystemAdminPanel } from './pages/SystemAdminPanel.jsx'
+import { getRoleKey, login } from './services/authService.js'
 
 function App() {
-  const handleSubmit = (event) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [userRole, setUserRole] = useState(null)
+  const [loginMessage, setLoginMessage] = useState('')
+
+  const handleLogin = async (event) => {
     event.preventDefault()
+    setLoginMessage('')
+
+    const formData = new FormData(event.currentTarget)
+    const usuario = formData.get('username')
+    const password = formData.get('password')
+
+    if (!usuario || !password) {
+      setLoginMessage('Ingresa usuario y contrasena para continuar.')
+      return
+    }
+
+    try {
+      const user = await login({ usuario, password })
+      setUserRole(getRoleKey(user.idRol))
+      setIsAuthenticated(true)
+    } catch {
+      setLoginMessage('Usuario o contrasena incorrectos, o el backend no esta disponible.')
+    }
   }
 
-  return (
-    <div className="login-page">
-      <header className="brand-bar">
-        <a className="brand" href="/" aria-label="Parque del Cafe">
-          <img src={brandLogo} alt="Parque del Cafe" className="brand-logo" />
-        </a>
-      </header>
+  const handleLogout = () => {
+    setIsAuthenticated(false)
+    setUserRole(null)
+  }
 
-      <main className="login-stage">
-        <section className="login-card" aria-labelledby="login-title">
-          <h1 id="login-title">INICIO DE SESION</h1>
+  if (!isAuthenticated) {
+    return <RoleLogin message={loginMessage} onSubmit={handleLogin} />
+  }
 
-          <div className="card-ornament" aria-hidden="true">
-            <span className="card-ornament__line"></span>
-            <span className="card-ornament__badge">O</span>
-            <span className="card-ornament__line"></span>
-          </div>
+  if (userRole === 'electrician') {
+    return <ElectricianPanel onLogout={handleLogout} />
+  }
 
-          <form className="login-form" onSubmit={handleSubmit}>
-            <label className="field">
-              <span className="field__label">Usuario</span>
-              <input
-                type="text"
-                name="username"
-                placeholder="Ingresa tu usuario"
-                autoComplete="username"
-              />
-            </label>
+  if (userRole === 'systemAdmin') {
+    return <SystemAdminPanel onLogout={handleLogout} />
+  }
 
-            <label className="field">
-              <span className="field__label">Contrasena</span>
-              <input
-                type="password"
-                name="password"
-                placeholder="Ingresa tu contrasena"
-                autoComplete="current-password"
-              />
-            </label>
-
-            <div className="login-options">
-              <label className="remember-option">
-                <input type="checkbox" name="remember" />
-                <span>Recordarme</span>
-              </label>
-            </div>
-
-            <button className="login-button" type="submit">
-              Entrar
-            </button>
-          </form>
-        </section>
-      </main>
-    </div>
-  )
+  return <ElectricalAdminPanel onLogout={handleLogout} />
 }
 
 export default App
